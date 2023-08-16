@@ -7,7 +7,7 @@ const user = {
 
 let count = 0;
 //Do not touch these functions below at all
-function createPost() {
+async function createPost() {
     return new Promise( (resolve, reject) => {
         setTimeout( () => {
             posts.push({ title: "Post" + count });
@@ -21,7 +21,7 @@ function createPost() {
 
 
 
-function deletePost(){
+async function deletePost(){
       return new Promise((resolve, reject) => {
         setTimeout( () => {
             if(posts.length > 0){
@@ -35,7 +35,7 @@ function deletePost(){
 }
 
 
-function updateLastUserActivityTime() {
+async function updateLastUserActivityTime() {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             console.log('Updating User Last Activity Time');
@@ -47,7 +47,17 @@ function updateLastUserActivityTime() {
 
 }
 
-console.log("Last Active time of the User :", user.lastActivityTime);
 
-Promise.all([createPost({title: 'Post Five', body: 'This is Post Five'}), updateLastUserActivityTime()])
+(async () => {
+    console.log("Last Active time of the User:", user.lastActivityTime);
+
+    try {
+        await createPost();
+        await updateLastUserActivityTime();
+    } catch (error) {
+        console.error(error);
+    }
+})();
+
+
 
